@@ -232,20 +232,32 @@ Class Company
             Console.WriteLine("No Matrix to display")
         End If
     End Sub
-
-    public Sub BruteForceTraverse()
-        'list every combination
-        For outlet = 1 To 5
-
     
-        next    
-        
-        End Sub
+ '   procedure generate(k : integer, A : array of any):
+  '  if k = 1 then
+   '     output(A)
+    else
+        // Generate permutations with kth unaltered
+        // Initially k == length(A)
+        generate(k - 1, A)
+
+        // Generate permutations for kth swapped with each k-1 initial
+        for i := 0; i < k-1; i += 1 do
+            // Swap choice dependent on parity of k (even or odd)
+            if k is even then
+                swap(A[i], A[k-1]) // zero-indexed, the kth is at k-1
+            else
+                swap(A[0], A[k-1])
+            end if
+            generate(k - 1, A)
+
+        end for
+    end if
+
 
 
     Public Function GetName() As String
-        
-        Return Name
+             Return Name
     End Function
 
     Public Function GetNumberOfOutlets() As Integer
