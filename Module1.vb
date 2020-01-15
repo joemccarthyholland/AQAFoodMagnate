@@ -23,7 +23,7 @@ Class Household
         Details = ID.ToString() & "     Coordinates: (" & XCoord.ToString() & ", " & YCoord.ToString() & ")     Eat out probability: " & ChanceEatOutPerDay.ToString()
         Return Details
     End Function
-
+    
     Public Function GetChanceEatOut() As Single
         Return ChanceEatOutPerDay
     End Function
@@ -116,6 +116,7 @@ End Class
 Class Outlet
     Protected VisitsToday, XCoord, YCoord, Capacity, MaxCapacity As Integer
     Protected DailyCosts As Single
+    Public deliveredToday As Boolean = false
 
     Public Sub New(ByVal XCoord As Integer, ByVal YCoord As Integer, ByVal MaxCapacityBase As Integer)
         Me.XCoord = XCoord
@@ -180,7 +181,7 @@ Class Company
     Protected Balance, ReputationScore, AvgCostPerMeal, AvgPricePerMeal, DailyCosts, FamilyOutletCost, FastFoodOutletCost, NamedChefOutletCost, FuelCostPerUnit, BaseCostOfDelivery As Single
     Protected Outlets As New ArrayList
     Protected FamilyFoodOutletCapacity, FastFoodOutletCapacity, NamedChefOutletCapacity As Integer
-
+    Protected AdMatrix(,) As Single
     Public Sub New(ByVal Name As String, ByVal Category As String, ByVal Balance As Single, ByVal X As Integer, ByVal Y As Integer, ByVal FuelCostPerUnit As Single, ByVal BaseCostOfDelivery As Single)
         FamilyOutletCost = 1000
         FastFoodOutletCost = 2000
@@ -211,7 +212,39 @@ Class Company
         OpenOutlet(X, Y)
     End Sub
 
+    Public Sub CreateAdMatrix()
+        ReDim AdMatrix(Outlets.Count() - 1, Outlets.Count() - 1)
+        For outletA = 0 To Outlets.Count() - 1
+            For outletB = 0 To Outlets.Count() - 1
+                AdMatrix(outletA, outletB) = GetDistanceBetweenTwoOutlets(outletA, outletB)
+            Next
+        Next
+    End Sub
+    Public Sub DisplayAdMatrix()
+        If AdMatrix.Length > 0 Then
+            For outletA = 0 To Outlets.Count() - 1
+                For outletB = 0 To Outlets.Count() - 1
+                    Console.Write("|" & Round(AdMatrix(outletA, outletB), 1) & vbTab)
+                Next
+                Console.WriteLine("|")
+            Next
+        Else
+            Console.WriteLine("No Matrix to display")
+        End If
+    End Sub
+
+    public Sub BruteForceTraverse()
+        'list every combination
+        For outlet = 1 To 5
+
+    
+        next    
+        
+        End Sub
+
+
     Public Function GetName() As String
+        
         Return Name
     End Function
 
