@@ -182,6 +182,7 @@ Class Company
     Protected Outlets As New ArrayList
     Protected FamilyFoodOutletCapacity, FastFoodOutletCapacity, NamedChefOutletCapacity As Integer
     Protected AdMatrix(,) As Single
+
     Public Sub New(ByVal Name As String, ByVal Category As String, ByVal Balance As Single, ByVal X As Integer, ByVal Y As Integer, ByVal FuelCostPerUnit As Single, ByVal BaseCostOfDelivery As Single)
         FamilyOutletCost = 1000
         FastFoodOutletCost = 2000
@@ -232,28 +233,33 @@ Class Company
             Console.WriteLine("No Matrix to display")
         End If
     End Sub
-    
- '   procedure generate(k : integer, A : array of any):
-  '  if k = 1 then
-   '     output(A)
-    else
-        // Generate permutations with kth unaltered
-        // Initially k == length(A)
-        generate(k - 1, A)
 
-        // Generate permutations for kth swapped with each k-1 initial
-        for i := 0; i < k-1; i += 1 do
-            // Swap choice dependent on parity of k (even or odd)
-            if k is even then
-                swap(A[i], A[k-1]) // zero-indexed, the kth is at k-1
-            else
-                swap(A[0], A[k-1])
-            end if
-            generate(k - 1, A)
+    Function GenPerms(ByVal k As Integer, ByVal blah() As Byte)
+        Dim temp As Byte
+        If k = 1 Then
+            For z = 0 To 4
+                Console.Write(blah(z) & ",")
+            Next
+            Console.WriteLine()
+            Return blah
+        Else
+            GenPerms(k - 1, blah)
 
-        end for
-    end if
+            For i = 0 To k - 1
+                If k Mod 2 = 0 Then
+                    temp = blah(i)
+                    blah(i) = blah(k - 1)
+                    blah(k - 1) = temp
+                Else
+                    temp = blah(0)
+                    blah(0) = blah(k - 1)
+                    blah(k - 1) = temp
+                End If
+                GenPerms(k - 1, blah)
+            Next
+        End If
 
+    End Function
 
 
     Public Function GetName() As String
@@ -712,6 +718,7 @@ End Class
 
 Module Module1
     Sub Main()
+        Module2.run()
         Randomize()
         Dim ThisSim As New Simulation
         ThisSim.Run()
