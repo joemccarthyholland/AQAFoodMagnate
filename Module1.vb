@@ -213,53 +213,7 @@ Class Company
         OpenOutlet(X, Y)
     End Sub
 
-    Public Sub CreateAdMatrix()
-        ReDim AdMatrix(Outlets.Count() - 1, Outlets.Count() - 1)
-        For outletA = 0 To Outlets.Count() - 1
-            For outletB = 0 To Outlets.Count() - 1
-                AdMatrix(outletA, outletB) = GetDistanceBetweenTwoOutlets(outletA, outletB)
-            Next
-        Next
-    End Sub
-    Public Sub DisplayAdMatrix()
-        If AdMatrix.Length > 0 Then
-            For outletA = 0 To Outlets.Count() - 1
-                For outletB = 0 To Outlets.Count() - 1
-                    Console.Write("|" & Round(AdMatrix(outletA, outletB), 1) & vbTab)
-                Next
-                Console.WriteLine("|")
-            Next
-        Else
-            Console.WriteLine("No Matrix to display")
-        End If
-    End Sub
 
-    Function GenPerms(ByVal k As Integer, ByVal blah() As Byte)
-        Dim temp As Byte
-        If k = 1 Then
-            For z = 0 To 4
-                Console.Write(blah(z) & ",")
-            Next
-            Console.WriteLine()
-            Return blah
-        Else
-            GenPerms(k - 1, blah)
-
-            For i = 0 To k - 1
-                If k Mod 2 = 0 Then
-                    temp = blah(i)
-                    blah(i) = blah(k - 1)
-                    blah(k - 1) = temp
-                Else
-                    temp = blah(0)
-                    blah(0) = blah(k - 1)
-                    blah(k - 1) = temp
-                End If
-                GenPerms(k - 1, blah)
-            Next
-        End If
-
-    End Function
 
 
     Public Function GetName() As String
